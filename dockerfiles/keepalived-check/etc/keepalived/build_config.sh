@@ -15,6 +15,7 @@ PRIORITY=`echo $LOCAL_IP|awk -F. '{print $4}'`
 replace_var(){
     files=$@
     echo $files | xargs sed -i 's/--ENNAME--/'"$ETH"'/g'
+    echo $files | xargs sed -i 's/--VRRP_ENNAME--/'"$VRRP_ENNAME"'/g'
     echo $files | xargs sed -i 's/--PRIORITY--/'"$PRIORITY"'/g'
     echo $files | xargs sed -i 's/--VIRTUAL_ROUTER_ID--/'"$VIRTUAL_ROUTER_ID"'/g'
     echo $files | xargs sed -i 's/--LOCAL_IP--/'"$LOCAL_IP"'/g'
