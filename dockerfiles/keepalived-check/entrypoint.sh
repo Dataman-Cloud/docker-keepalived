@@ -1,5 +1,6 @@
 #!/bin/bash
-set -ex
+set -e
+#set -x
 
 if [ "x$CONFIG_SERVER" != "x" ];then
     export DM_READ_URI=`curl $CONFIG_SERVER/config/$(hostname)/keepalived/filelist.json`
@@ -32,10 +33,22 @@ if  ! ip addr show $VRRP_ENNAME &>/dev/null ;then
     ip addr add dev $VRRP_ENNAME $GRETAP_IP/$BITMASK
 fi
 
-
-
-#trap "pkill keepalived ; exit 1" SIGHUP SIGINT SIGTERM EXIT
-
-#echo '' > /var/log/keepalived-status.log
+CMD="/usr/sbin/keepalived --dont-fork --log-console"
+# build config
 ./etc/keepalived/build_config.sh
-#/usr/sbin/keepalived --dont-fork --log-console
+
+pid=0
+# shutdown
+shutdown_headler() {
+  if [ $pid -ne 0 ]; then
+    kill -SIGTERM "$pid"
+    wait "$pid"
+  fi
+  exit 0
+}
+
+# setup handlers
+trap "shutdown_headler" SIGKILL SIGTERM SIGHUP SIGINT 
+
+# run
+exec $CMD
