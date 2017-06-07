@@ -5,7 +5,7 @@ MAINTAINER jyliu <jyliu@dataman-inc.com>
 
 
 RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
-RUN yum -y  update;yum clean all
+#RUN yum -y  update;yum clean all
 
 RUN yum -y install keepalived && yum clean all
 

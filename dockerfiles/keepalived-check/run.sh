@@ -10,7 +10,7 @@ docker run -d \
     -e CHECK_SERVICE="haproxy" \
     -e ETH="eth0" \
     -e KEEPALIVED_VIP="10.3.10.254" \
-    -e BITMASK="24"
+    -e BITMASK="24" \
     -v /sbin/modprobe:/sbin/modprobe \
     -v /lib/modules:/lib/modules \
     shurenyun/centos7-keepalived-1.2.13-check
