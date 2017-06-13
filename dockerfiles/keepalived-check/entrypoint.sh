@@ -33,22 +33,9 @@ if  ! ip addr show $VRRP_ENNAME &>/dev/null ;then
     ip addr add dev $VRRP_ENNAME $GRETAP_IP/$BITMASK
 fi
 
-CMD="/usr/sbin/keepalived --dont-fork --log-console"
 # build config
 ./etc/keepalived/build_config.sh
 
-pid=0
-# shutdown
-shutdown_headler() {
-  if [ $pid -ne 0 ]; then
-    kill -SIGTERM "$pid"
-    wait "$pid"
-  fi
-  exit 0
-}
-
-# setup handlers
-trap "shutdown_headler" SIGKILL SIGTERM SIGHUP SIGINT 
-
 # run
+CMD="/usr/sbin/keepalived --dont-fork --log-console"
 exec $CMD

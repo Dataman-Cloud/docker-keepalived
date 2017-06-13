@@ -1,1 +1,1 @@
-docker build $opts -t shurenyun/centos7-keepalived-1.2.13 .
+docker build $opts -t shurenyun/centos7-keepalived-1.3.5 .

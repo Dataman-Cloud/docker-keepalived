@@ -1,4 +1,4 @@
-FROM shurenyun/centos7-keepalived-1.2.13
+FROM shurenyun/centos7-keepalived-1.3.5
 MAINTAINER jyliu <jyliu@dataman-inc.com>
 
 #RUN yum install -y mysql &&\

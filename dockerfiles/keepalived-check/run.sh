@@ -13,5 +13,5 @@ docker run -d \
     -e BITMASK="24" \
     -v /sbin/modprobe:/sbin/modprobe \
     -v /lib/modules:/lib/modules \
-    shurenyun/centos7-keepalived-1.2.13-check
+    shurenyun/centos7-keepalived-1.3.5-check
     #--entrypoint=/bin/bash \
