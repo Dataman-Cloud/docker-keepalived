@@ -1,3 +1,4 @@
+# old version (deprecated)
 docker run -d \
     --name=dataman-keepalived \
     --privileged=true \

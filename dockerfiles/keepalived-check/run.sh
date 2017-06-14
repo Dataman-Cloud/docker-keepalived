@@ -3,10 +3,7 @@ docker run -d \
     --privileged=true \
     --net=host \
     --restart always \
-    -e NODE1="10.3.10.33" \
-    -e NODE2="10.3.10.48" \
-    -e GRETAP_IP1="10.1.1.2" \
-    -e GRETAP_IP2="10.1.1.3" \
+    -e NODE_LIST="10.3.10.33,10.3.10.34,10.3.10.35"
     -e CHECK_SERVICE="haproxy" \
     -e ETH="eth0" \
     -e KEEPALIVED_VIP="10.3.10.254" \

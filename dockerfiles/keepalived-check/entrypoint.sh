@@ -10,28 +10,30 @@ if [ "x$DM_READ_URI" != "x" ];then
 	/DM_DOCKER_URI.py
 fi
 
+error(){
+	info=$1
+	errorcode=${2:-"1"}
+	echo $info && exit $errorcode
+}
+
+is_empty(){
+	name=$1
+	valuie=$2
+	if [ -z "$valuie" ];then
+		error "$name is empty !"
+	fi
+}
+
 export ETH=${ETH:-"eth0"}
 export BITMASK=${BITMASK:-"24"}
 export LOCAL_IP=`ip a show $ETH|awk '/inet.*brd.*'$ETH'/{print $2}'|awk -F "/" '{print $1}'`
-export VRRP_ENNAME=gretap1
 
-if [ -z "$NODE1" ] || [ -z "$NODE2" ] || [ -z "$LOCAL_IP" ];then
-    echo "LOCAL_IP or NODE1 or NODE2 is empty"
-elif [ "$LOCAL_IP" == "$NODE1" ];then
-    export REMOTE_IP="$NODE2"
-    GRETAP_IP="$GRETAP_IP1"
-elif [ "$LOCAL_IP" == "$NODE2" ];then
-    export REMOTE_IP="$NODE1"
-    GRETAP_IP="$GRETAP_IP2"
-else
-    echo "ERROR: Local_ip and node IP does not match." && exit 1
-fi
+# Determine whether is empty
+is_empty LOCAL_IP $LOCAL_IP
+is_empty KEEPALIVED_VIP $KEEPALIVED_VIP
+is_empty NODE_LIST $NODE_LIST
+is_empty CHECK_SERVICE $CHECK_SERVICE
 
-if  ! ip addr show $VRRP_ENNAME &>/dev/null ;then
-    ip link add $VRRP_ENNAME type gretap local $LOCAL_IP remote $REMOTE_IP
-    ip link set dev $VRRP_ENNAME up
-    ip addr add dev $VRRP_ENNAME $GRETAP_IP/$BITMASK
-fi
 
 # build config
 ./etc/keepalived/build_config.sh
