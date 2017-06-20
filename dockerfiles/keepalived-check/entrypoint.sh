@@ -26,7 +26,10 @@ is_empty(){
 
 export ETH=${ETH:-"eth0"}
 export BITMASK=${BITMASK:-"24"}
-export LOCAL_IP=`ip a show $ETH|awk '/inet.*brd.*'$ETH'/{print $2}'|awk -F "/" '{print $1}'`
+
+if [ -z "$LOCAL_IP" ];then
+	export LOCAL_IP=`ip a show $ETH|awk '/inet.*global.*'$ETH'/{print $2}'|grep -v $KEEPALIVED_VIP|awk -F "/" '{print $1}'`
+fi
 
 # Determine whether is empty
 is_empty LOCAL_IP $LOCAL_IP
