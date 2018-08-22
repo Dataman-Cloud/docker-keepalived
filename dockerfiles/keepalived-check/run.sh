@@ -3,12 +3,12 @@ docker run -d \
     --privileged=true \
     --net=host \
     --restart always \
-    -e NODE_LIST="10.3.10.33,10.3.10.34,10.3.10.35"
+    -e NODE_LIST="10.11.20.119,10.11.20.118" \
     -e CHECK_SERVICE="haproxy" \
     -e ETH="eth0" \
-    -e KEEPALIVED_VIP="10.3.10.254" \
-    -e BITMASK="24" \
+    -e KEEPALIVED_VIP="10.11.20.254" \
     -v /sbin/modprobe:/sbin/modprobe \
-    -v /lib/modules:/lib/modules \
     shurenyun/centos7-keepalived-1.3.5-check
+    #-v /lib/modules:/lib/modules \
+    #-e BITMASK="24" \
     #--entrypoint=/bin/bash \

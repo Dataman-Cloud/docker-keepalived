@@ -7,7 +7,10 @@ MAINTAINER jyliu <jyliu@dataman-inc.com>
 COPY /etc/ /etc/
 COPY entrypoint.sh /
 
-RUN chmod -R 755 /etc/keepalived/scripts /etc/keepalived/build_config.sh /entrypoint.sh
+# add filedownload script
+ADD https://raw.githubusercontent.com/Dataman-Cloud/OpenDockerFile/master/basefile/scripts/DM_DOCKER_URI_2.7.py /DM_DOCKER_URI.py
+ADD https://raw.githubusercontent.com/Dataman-Cloud/OpenDockerFile/master/basefile/scripts/filedownload.sh /filedownload.sh
+RUN chmod +x /*.py /*.sh && chmod -R 755 /etc/keepalived/scripts /etc/keepalived/build_config.sh /entrypoint.sh
 ENV TERM dumb
 
 ENTRYPOINT ["/entrypoint.sh"]

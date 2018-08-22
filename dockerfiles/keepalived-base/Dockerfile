@@ -1,8 +1,9 @@
-FROM demoregistry.dataman-inc.com/library/centos7-base:latest
+FROM centos:7
 MAINTAINER jyliu <jyliu@dataman-inc.com>
 
+RUN INSTALL_PKGS="kmod keepalived iproute psmisc nmap-ncat net-tools ipset ipset-libs" && \
+    yum install -y $INSTALL_PKGS && \
+    rpm -V $INSTALL_PKGS && \
+    yum clean all
 
-COPY keepalived-1.3.5-2.x86_64.rpm /
-
-RUN yum -y install /keepalived-1.3.5-2.x86_64.rpm && yum clean all && rm -f /keepalived-1.3.5-2.x86_64.rpm
-
+EXPOSE 1985
